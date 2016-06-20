@@ -3,11 +3,11 @@ package sales.client;
 import java.io.File;
 
 /**
- * Validator for command line args
+ * Command line argument validation
  */
 
-public class ArgsValidator {
-    public static final String USAGE = "Usage: CommandLineReporter <CSV file> <Car Model> <City>";
+class ArgsValidator {
+    private static final String USAGE = "Usage: CommandLineReporter <CSV file> <Car Model> <City>";
 
     private File inputFile;
     private String carModel;
@@ -35,27 +35,27 @@ public class ArgsValidator {
     }
 
 
-    public void setMessage(String message) {
+    private void setMessage(String message) {
         this.message = message;
     }
 
-    public File getInputFile() {
+    File getInputFile() {
         return inputFile;
     }
 
-    public String getCarModel() {
+    String getCarModel() {
         return carModel;
     }
 
-    public String getCity() {
+    String getCity() {
         return city;
     }
 
-    public boolean isHasErrors() {
+    boolean isHasErrors() {
         return hasErrors;
     }
 
-    public String getMessage() {
+    String getMessage() {
         return message;
     }
 }
