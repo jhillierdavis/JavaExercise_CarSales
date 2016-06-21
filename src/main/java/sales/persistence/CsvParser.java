@@ -6,6 +6,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 
+/**
+ * Simple CSV (comma Separated Value) file parser for anticipated Car Sales input data format.
+ */
+
 public class CsvParser	{
 	SalesDatum[] data;
 	
