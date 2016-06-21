@@ -100,4 +100,22 @@ public class SalesAnalyserTest {
     }
 
 
+    @Test
+    public void addSale()   {
+        // Given:
+        SalesInfo analyser = new SalesAnalyser(testData);
+
+        // Then:
+        assertEquals( "Golf", analyser.mostPopularModelOf("London").get() );
+        assertEquals(1, analyser.sales("Scirocco") );
+
+        // When:
+        analyser.addSale("Scirocco", "London");
+        analyser.addSale("Scirocco", "London");
+        analyser.addSale("Scirocco", "London");
+
+        // Then:
+        assertEquals( "Scirocco", analyser.mostPopularModelOf("London").get() );
+        assertEquals(4, analyser.sales("Scirocco") );
+    }
 }

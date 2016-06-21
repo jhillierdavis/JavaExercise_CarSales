@@ -10,8 +10,8 @@ import java.util.Optional;
  */
 
 public class SalesAnalyser implements SalesInfo {
-    private final SalesDatum[] data;
-    private final String[] uniqueCarModels;
+    private SalesDatum[] data;
+    private String[] uniqueCarModels;
 
     public SalesAnalyser(final SalesDatum[] data)    {
         if (null == data)   {
@@ -23,19 +23,36 @@ public class SalesAnalyser implements SalesInfo {
         this.data = data;
     }
 
+    @Override
     public int sales(final String model)    {
         return (int) Arrays.stream(this.data).filter( d -> d.getCarModel().equals(model) ).count();
     }
 
+    @Override
     public Optional<String> mostPopularModel()    {
         return getPopularity( Optional.empty() );
     }
 
+    @Override
     public Optional<String> mostPopularModelOf(final String city)   {
         if (null == city)   {
             throw new IllegalArgumentException("City is null");
         }
         return getPopularity( Optional.of(city) );
+    }
+
+    @Override
+    public void addSale(String model, String city) {
+        // TODO: Implement
+        int newLength = this.data.length + 1;
+        SalesDatum[] replacement = new SalesDatum[ newLength ];
+        System.arraycopy( this.data, 0, replacement, 0, newLength - 1 );
+        replacement[ newLength - 1 ] = new SalesDatum(model, city);
+
+        this.data = replacement;
+
+        CarModelFilter filter = new CarModelFilter(this.data);
+        this.uniqueCarModels = filter.getUniqueCarModels();
     }
 
     private Optional<String> getPopularity(final Optional<String> optionalCity) {

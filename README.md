@@ -32,6 +32,15 @@ Please bear in mind all the best practices you would normally employ when produc
 * Verified by tests 
 * Readable & expressive code
 
+### Update ###
+
+Refactor to add an additional method:
+
+| Method | Purpose |
+| ------------- |-------------|
+| sales(model, city) | Adds a car model, within the associated city, to the overall collection of cars sold |
+
+
 
 ## Execution ##
 
