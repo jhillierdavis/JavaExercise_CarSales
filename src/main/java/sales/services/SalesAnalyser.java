@@ -28,10 +28,22 @@ public class SalesAnalyser implements SalesInfo {
     }
 
     public Optional<String> mostPopularModel()    {
+        return getPopularity( Optional.empty() );
+    }
+
+    public Optional<String> mostPopularModelOf(final String city)   {
+        if (null == city)   {
+            throw new IllegalArgumentException("City is null");
+        }
+        return getPopularity( Optional.of(city) );
+    }
+
+    private Optional<String> getPopularity(final Optional<String> optionalCity) {
         int maxSales = 0;
         String mostPopular = "";
         for (String carModel: this.uniqueCarModels)    {
-            int sales = this.sales(carModel);
+            int sales = getSales( carModel, optionalCity );
+
             if (sales > maxSales)   {
                 mostPopular = carModel;
                 maxSales = sales;
@@ -40,17 +52,14 @@ public class SalesAnalyser implements SalesInfo {
         return 0 == maxSales ? Optional.empty() : Optional.of(mostPopular);
     }
 
-    public Optional<String> mostPopularModelOf(final String city)   {
-        int maxSales = 0;
-        String mostPopular = "";
-        for (String carModel: this.uniqueCarModels)    {
-            int sales = this.sales(carModel, city);
-            if (sales > maxSales)   {
-                mostPopular = carModel;
-                maxSales = sales;
-            }
+    private int getSales(String carModel, Optional<String> optionalCity) {
+        int sales;
+        if (optionalCity.isPresent()) {
+            sales = this.sales(carModel, optionalCity.get());
+        } else {
+            sales = this.sales(carModel);
         }
-        return 0 == maxSales ? Optional.empty() : Optional.of(mostPopular);
+        return sales;
     }
 
     protected int sales(final String model, final String city)    {
