@@ -33,17 +33,33 @@ public class SalesAnalyserTest {
 
     @Test
     public void mostPopularModelOfCity()    {
-        // Given:
+        // Given: test data processed
         SalesInfo info = new SalesAnalyser(testData);
 
-        // Then:
+        // Then: check expected results
         assertEquals(false, info.mostPopularModelOf("Bogus").isPresent());
         assertEquals( "Golf", info.mostPopularModelOf("London").get() );
         assertEquals( "Golf", info.mostPopularModelOf("Liverpool").get() ); // Ambiguous, use first
         assertEquals( "Polo", info.mostPopularModelOf("Leeds").get() );
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void mostPopularModelOfEmptyCity()    {
+        // Given: test data processed
+        SalesInfo info = new SalesAnalyser(testData);
 
+        // Then: check expected results
+        assertEquals(false, info.mostPopularModelOf(" ").isPresent());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void mostPopularModelOfNullCity()    {
+        // Given: test data processed
+        SalesInfo info = new SalesAnalyser(testData);
+
+        // Then: check expected results
+        assertEquals(false, info.mostPopularModelOf(null).isPresent());
+    }
 
     @Test
     public void salesForModel()    {
