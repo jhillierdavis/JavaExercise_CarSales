@@ -37,7 +37,17 @@ Please bear in mind all the best practices you would normally employ when produc
 
 Example command-line execution (via Gradle):
 
+```
 gradle run -PappArgs="['./src/test/resources/model_city_sales_data.csv','New Passat','Leeds']"
+```
+
+### Example output ###
+
+```
+Most popular model = Golf
+Total sales of car model: New Passat = 1
+Most popular car model in city: Leeds = New Sharan
+```
 
 
 ## Design ##
