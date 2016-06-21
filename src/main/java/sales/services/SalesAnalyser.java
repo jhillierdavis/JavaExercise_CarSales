@@ -2,10 +2,11 @@ package sales.services;
 
 import sales.model.SalesDatum;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * Sales data analyser
+ * Analyses sales data to obtain meta data (e.g. sales counts, popularity)
  */
 
 public class SalesAnalyser implements SalesInfo {
@@ -23,13 +24,7 @@ public class SalesAnalyser implements SalesInfo {
     }
 
     public int sales(final String model)    {
-        int count = 0;
-        for(SalesDatum datum: this.data)  {
-            if (datum.getCarModel().equals(model))    {
-                count++;
-            }
-        }
-        return count;
+        return (int) Arrays.stream(this.data).filter( d -> d.getCarModel().equals(model) ).count();
     }
 
     public Optional<String> mostPopularModel()    {
@@ -60,13 +55,6 @@ public class SalesAnalyser implements SalesInfo {
 
     protected int sales(final String model, final String city)    {
         SalesDatum entryToMatch = new SalesDatum(model, city);
-
-        int count = 0;
-        for(SalesDatum datum: this.data)  {
-            if (entryToMatch.equals(datum))    {
-                count++;
-            }
-        }
-        return count;
+        return (int) Arrays.stream(this.data).filter( d -> d.equals(entryToMatch) ).count();
     }
 }
