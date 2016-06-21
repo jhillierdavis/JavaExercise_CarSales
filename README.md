@@ -5,7 +5,12 @@
 A car manufacturer in the UK maintains a file that contains a list of all car models sold in a period of time for analysis purposes. The file contains a line entry for each individual car sold, by model & city.
 
 Example (CSV format, including header line):
-`Model, City  Passat, London  Golf, London  Passat, Bristol  Sharan, Leeds  Golf, London`
+`Model, City`  
+`Passat, London`  
+`Golf, London`
+`Passat, Bristol`  
+`Sharan, Leeds`  
+`Golf, London`
 
 Using Java (version 7 or above) implement a sales based ranking, specifically providing execution of the following functionality from the command-line:
 
@@ -26,3 +31,17 @@ Please bear in mind all the best practices you would normally employ when produc
 * Well structured code 
 * Verified by tests 
 * Readable & expressive code
+
+
+## Execution ##
+
+Example command-line execution (via Gradle):
+
+gradle run -PappArgs="['./src/test/resources/model_city_sales_data.csv','New Passat','Leeds']"
+
+
+## Design ##
+
+Overview of current implementation design:
+
+![UML Class Diagram: Car Sales](./docs/uml/UML_ClassDiagram_CarSales.png)
