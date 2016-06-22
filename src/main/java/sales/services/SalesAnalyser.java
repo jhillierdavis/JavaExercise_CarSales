@@ -13,7 +13,16 @@ public class SalesAnalyser implements SalesInfo {
     private SalesDatum[] data;
     private String[] uniqueCarModels;
 
+    public SalesAnalyser()  {
+        this.uniqueCarModels = new String[0];
+        this.data = new SalesDatum[0];
+    }
+
     public SalesAnalyser(final SalesDatum[] data)    {
+        this.reload(data);
+    }
+
+    public void reload(final SalesDatum[] data)    {
         if (null == data)   {
             throw new IllegalArgumentException("Null data");
         }
