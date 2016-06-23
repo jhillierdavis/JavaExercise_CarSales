@@ -1,0 +1,10 @@
+ToDo Tasks
+==========
+
+* Improve data model - replace Array (with inefficient array copy on addition) with better approach
+* Trim input data - remove unnecessary leading/trailing space
+* Case insensitive data matching - car model & city
+* Consider removing Optional use in parameter - bad practice (returns only)?
+* Remove CommandLineReporter - superseded by InteractiveConsole
+* Update overview diagram
+* Update README markdown file - for tech. design choices etc.
