@@ -11,13 +11,9 @@ import java.util.Optional;
  */
 
 public class SalesAnalyser implements SalesInfo {
-    // private SalesDatum[] data;
-    // private String[] uniqueCarModels;
     Matrix saleMatrix;
 
     public SalesAnalyser()  {
-        // this.uniqueCarModels = new String[0];
-        // this.data = new SalesDatum[0];
         this.saleMatrix = new Matrix();
     }
 
@@ -30,9 +26,6 @@ public class SalesAnalyser implements SalesInfo {
             throw new IllegalArgumentException("Null data");
         }
 
-        CarModelFilter filter = new CarModelFilter(data);
-        // this.uniqueCarModels = filter.getUniqueCarModels();
-        // this.data = data;
         this.saleMatrix = new Matrix();
         for (SalesDatum datum: data)    {
             this.saleMatrix.add(datum.getCarModel(), datum.getCity(), 1);
@@ -41,7 +34,6 @@ public class SalesAnalyser implements SalesInfo {
 
     @Override
     public int sales(final String model)    {
-        // return (int) Arrays.stream(this.data).filter( d -> d.getCarModel().equals(model) ).count();
         return this.saleMatrix.getRowSum(model);
     }
 
@@ -60,24 +52,12 @@ public class SalesAnalyser implements SalesInfo {
 
     @Override
     public void addSale(String model, String city) {
-        /*
-        int newLength = this.data.length + 1;
-        SalesDatum[] replacement = new SalesDatum[ newLength ];
-        System.arraycopy( this.data, 0, replacement, 0, newLength - 1 );
-        replacement[ newLength - 1 ] = new SalesDatum(model, city);
-
-        this.data = replacement;
-
-        CarModelFilter filter = new CarModelFilter(this.data);
-        this.uniqueCarModels = filter.getUniqueCarModels();
-        */
         this.saleMatrix.add(model, city, 1);
     }
 
     private Optional<String> getPopularity(final Optional<String> optionalCity) {
         int maxSales = 0;
         String mostPopular = "";
-        // for (String carModel: this.uniqueCarModels)    {
         for (String carModel: this.saleMatrix.getRows())    {
             int sales = getSales( carModel, optionalCity );
 
@@ -100,10 +80,6 @@ public class SalesAnalyser implements SalesInfo {
     }
 
     protected int sales(final String model, final String city)    {
-        /*
-        SalesDatum entryToMatch = new SalesDatum(model, city);
-        return (int) Arrays.stream(this.data).filter( d -> d.equals(entryToMatch) ).count();
-        */
         return this.saleMatrix.get(model, city);
     }
 }
