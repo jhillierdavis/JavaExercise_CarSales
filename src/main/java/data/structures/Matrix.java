@@ -18,12 +18,14 @@ import java.util.Arrays;
 
 public class Matrix {
 
+
     private String[] rows, columns;
     private int[][] values;
     private static final int GROWTH_INCREMENT = 10;
+    private static final int INITIAL_DIMENSION_SIZE = 10;
 
     public Matrix() {
-        this(10, 10);
+        this(INITIAL_DIMENSION_SIZE, INITIAL_DIMENSION_SIZE);
     }
 
     public Matrix(int initialRowSize, int initialColumnSize) {
@@ -51,24 +53,14 @@ public class Matrix {
         int columnIndex = getIndex(this.columns, column);
 
         if (rowIndex < 0 )  {
-            System.out.println("Growing rows by: " + GROWTH_INCREMENT);
-            /*
-            String[] replacement = new String[this.rows.length + GROWTH_INCREMENT];
-            System.arraycopy( this.rows, 0, replacement, 0, this.rows.length );
-            this.rows = replacement;
-            */
+            // System.out.println("Growing rows by: " + GROWTH_INCREMENT);
             this.rows = Arrays.copyOf(this.rows, this.rows.length + GROWTH_INCREMENT);
             rowIndex = getIndex(this.rows, row);
             hasGrown = true;
         }
 
         if (columnIndex < 0 )  {
-            System.out.println("Growing columns by: " + GROWTH_INCREMENT);
-            /*
-            String[] replacement = new String[this.columns.length + GROWTH_INCREMENT];
-            System.arraycopy( this.columns, 0, replacement, 0, this.columns.length);
-            this.columns = replacement;
-            */
+            // System.out.println("Growing columns by: " + GROWTH_INCREMENT);
             this.columns = Arrays.copyOf(this.columns, this.columns.length + GROWTH_INCREMENT);
             columnIndex = getIndex(this.columns, column);
             hasGrown = true;
@@ -94,13 +86,13 @@ public class Matrix {
     }
 
     public int get(String row, String column)   {
-        return this.getCell(row.trim().toLowerCase(), column.trim().toLowerCase());
+        return this.getCell(normalise(row), normalise(column));
     }
 
     public int getRowSum(String rowLabel)  {
         int count = 0;
 
-        int index = this.getRowIndex(rowLabel);
+        int index = this.getRowIndex(rowLabel.trim().toLowerCase());
         if (index < 0)  {
             return count;
         }
@@ -109,6 +101,22 @@ public class Matrix {
             count += this.values[index][i];
         }
         return count;
+    }
+
+    public String[] getRows()    {
+        return getActiveArray(this.rows);
+    }
+
+    public String[] getColumns()    {
+        return getActiveArray(this.columns);
+    }
+
+    private String[] getActiveArray(String[] sourceArray)    {
+        int index = 0;
+        while (null != sourceArray[index]) {
+            index++;
+        }
+        return Arrays.copyOf(sourceArray, index);
     }
 
     private int getCell(String row, String column)   {
@@ -130,15 +138,6 @@ public class Matrix {
         for(int i = 0, j = 0; i < this.rows.length && null != this.rows[i]; i++)   {
             System.out.print(this.rows[i] + "\t");
             for(j = 0; j < this.columns.length && null != this.columns[j]; j++)   {
-                /*
-                if ( null == columns[j])    {
-                    if (i == 0) {
-                        System.out.println();
-                    }
-                    break;
-                }
-                */
-                // System.out.print("\t[" + i + "][" + j +"] = " + this.values[i][j]);
                 System.out.print(this.values[i][j] + "\t\t\t");
             }
             System.out.println();
@@ -170,7 +169,18 @@ public class Matrix {
             }
         }
 
-
         return getNextAvailableIndex(array);
+    }
+
+    private String normalise(String value)    {
+        if (value == null)   {
+            throw new IllegalArgumentException("Invalid NULL value");
+        }
+
+        String str = value.trim();
+        if ("".equals(str)) {
+            throw new IllegalArgumentException("Invalid empty value");
+        }
+        return str.toLowerCase();
     }
 }
