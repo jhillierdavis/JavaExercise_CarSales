@@ -52,7 +52,6 @@ public class SalesAnalyser implements SalesInfo {
 
     @Override
     public void addSale(String model, String city) {
-        // TODO: Implement
         int newLength = this.data.length + 1;
         SalesDatum[] replacement = new SalesDatum[ newLength ];
         System.arraycopy( this.data, 0, replacement, 0, newLength - 1 );
