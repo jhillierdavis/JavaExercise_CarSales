@@ -4,6 +4,9 @@ import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.AnyOf.anyOf;
+import static org.hamcrest.core.StringContains.containsString;
+
 
 public class MatrixTest {
 
@@ -91,8 +94,6 @@ public class MatrixTest {
         // Given
         Matrix matrix = new Matrix(1, 1);
 
-
-
         // When
         matrix.add("r1", "c1", 1);
         matrix.add("r1", "c2", 2);
@@ -101,6 +102,35 @@ public class MatrixTest {
 
         // Then
         assertThat(matrix.getRowSum("r1"), is(10));
+    }
+
+    @Test
+    public void getActiveColumnsAndRows()  {
+        // Given
+        Matrix matrix = new Matrix();
+
+        // And
+        matrix.add("r1", "c1", 1);
+        matrix.add("r1", "c2", 2);
+        matrix.add("r1", "c3", 3);
+        matrix.add("r2", "c2", 4);
+        matrix.add("r2", "c2", 6);
+        matrix.add("r3", "c3", 3);
+
+        // When:
+        String[] rows = matrix.getRows();
+        String[] columns = matrix.getColumns();
+
+        // Then
+        assertThat(rows.length, is(3));
+        for(String value: rows ) {
+            assertThat(value, anyOf( containsString("r1"), containsString("r2"), containsString("r3") ));
+        }
+
+        assertThat(columns.length, is(3));
+        for(String value: columns ) {
+            assertThat(value, anyOf( containsString("c1"), containsString("c2"), containsString("c3") ));
+        }
     }
 
 }
