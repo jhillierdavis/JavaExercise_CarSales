@@ -3,6 +3,8 @@ package sales.services;
 import org.junit.*;
 import sales.model.SalesDatum;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 /**
@@ -28,7 +30,7 @@ public class SalesAnalyserTest {
         SalesInfo info = new SalesAnalyser(testData);
 
         // Then:
-        assertEquals("Golf", info.mostPopularModel().get());
+        assertThat(info.mostPopularModel().get(), is( equalTo("Golf".toLowerCase() ) ) );
     }
 
     @Test
@@ -38,9 +40,9 @@ public class SalesAnalyserTest {
 
         // Then: check expected results
         assertEquals(false, info.mostPopularModelOf("Bogus").isPresent());
-        assertEquals( "Golf", info.mostPopularModelOf("London").get() );
-        assertEquals( "Golf", info.mostPopularModelOf("Liverpool").get() ); // Ambiguous, use first
-        assertEquals( "Polo", info.mostPopularModelOf("Leeds").get() );
+        assertThat(info.mostPopularModelOf("London").get(), is (equalTo("Golf".toLowerCase() ) ) );
+        assertThat(info.mostPopularModelOf("Liverpool").get(), is (equalTo("Golf".toLowerCase() ) ) );
+        assertThat(info.mostPopularModelOf("Leeds").get(), is (equalTo("Polo".toLowerCase() ) ) );
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -71,14 +73,14 @@ public class SalesAnalyserTest {
 
         // And:
         int golfCount = analyser.sales("Golf");
-        assertTrue("Unexpected " + golfCount, 4 == golfCount);
+        assertThat( golfCount, is(4) );
 
         // And:
         int sciroccoCount = analyser.sales("Scirocco");
-        assertTrue("Unexpected " + sciroccoCount, 1 == sciroccoCount);
+        assertThat(sciroccoCount, is(1));
 
         // And:
-        assertTrue(3 == analyser.sales("Polo"));
+        assertThat( analyser.sales("Polo"), is(3) );
     }
 
     @Test
@@ -106,8 +108,8 @@ public class SalesAnalyserTest {
         SalesInfo analyser = new SalesAnalyser(testData);
 
         // Then:
-        assertEquals( "Golf", analyser.mostPopularModelOf("London").get() );
-        assertEquals(1, analyser.sales("Scirocco") );
+        assertThat( analyser.mostPopularModelOf("London").get(), is (equalTo("Golf".toLowerCase() )) );
+        assertThat(analyser.sales("Scirocco"), is(1) );
 
         // When:
         analyser.addSale("Scirocco", "London");
@@ -115,7 +117,7 @@ public class SalesAnalyserTest {
         analyser.addSale("Scirocco", "London");
 
         // Then:
-        assertEquals( "Scirocco", analyser.mostPopularModelOf("London").get() );
-        assertEquals(4, analyser.sales("Scirocco") );
+        assertThat( analyser.mostPopularModelOf("London").get(), is (equalTo("Scirocco".toLowerCase() )) );
+        assertThat(analyser.sales("Scirocco"), is(4) );
     }
 }
