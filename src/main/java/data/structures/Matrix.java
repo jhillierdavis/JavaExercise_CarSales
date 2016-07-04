@@ -127,21 +127,28 @@ public class Matrix {
     }
 
     public void displayAsText() {
+        displayColumnsAsText();
+        displayRowsAndDataAsText();
+    }
 
-        // Display columns
-        System.out.print("\t");
-        for (int c = 0; c < this.columns.length && null != this.columns[c]; c++)    {
-            System.out.print( "\t" + this.columns[c] + "\t");
-        }
-        System.out.println();
-
-        for(int i = 0, j = 0; i < this.rows.length && null != this.rows[i]; i++)   {
-            System.out.print(this.rows[i] + "\t");
+    private void displayRowsAndDataAsText() {
+        final String[] rows = this.getRows();
+        for(int i = 0, j = 0; i < rows.length; i++)   {
+            System.out.print(rows[i] + "\t");
             for(j = 0; j < this.columns.length && null != this.columns[j]; j++)   {
                 System.out.print(this.values[i][j] + "\t\t\t");
             }
             System.out.println();
         }
+    }
+
+    private void displayColumnsAsText() {
+        final String[] cols = this.getColumns();
+        System.out.print("\t");
+        for (int i = 0; i < cols.length; i++)    {
+            System.out.print( "\t" + cols[i] + "\t");
+        }
+        System.out.println();
     }
 
     private int getNextAvailableIndex(String[] array) {
