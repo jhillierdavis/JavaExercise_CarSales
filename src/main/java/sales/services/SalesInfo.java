@@ -12,6 +12,4 @@ public interface SalesInfo {
     Optional<String> mostPopularModelOf(String city);
 
     int sales(String model);
-
-    void addSale(String model, String city);
 }

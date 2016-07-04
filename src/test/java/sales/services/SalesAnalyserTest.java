@@ -105,7 +105,7 @@ public class SalesAnalyserTest {
     @Test
     public void addSale()   {
         // Given:
-        SalesInfo analyser = new SalesAnalyser(testData);
+        SalesAnalyser analyser = new SalesAnalyser(testData);
 
         // Then:
         assertThat( analyser.mostPopularModelOf("London").get(), is (equalTo("Golf".toLowerCase() )) );

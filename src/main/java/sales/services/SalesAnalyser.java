@@ -10,7 +10,7 @@ import java.util.Optional;
  * Analyses sales data to obtain meta data (e.g. sales counts, popularity)
  */
 
-public class SalesAnalyser implements SalesInfo {
+public class SalesAnalyser implements SalesInfo, SalesData {
     Matrix saleMatrix;
 
     public SalesAnalyser()  {
@@ -21,6 +21,7 @@ public class SalesAnalyser implements SalesInfo {
         this.reload(data);
     }
 
+    @Override
     public void reload(final SalesDatum[] data)    {
         if (null == data)   {
             throw new IllegalArgumentException("Null data");
