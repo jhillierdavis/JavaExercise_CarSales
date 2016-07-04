@@ -4,13 +4,19 @@ apply plugin: "application"
 // see http://mrhaki.blogspot.co.uk/2010/11/gradle-goodness-set-java-version.html
 sourceCompatibility = 1.8 // or '1.6', '6', 6, JavaVersion.VERSION_1_6, new Compatibility('Java 6')
 
-mainClassName = 'sales.client.CommandLineReporter'
+mainClassName = 'sales.client.Launcher'
 
 // Command-line argument support e.g. gradle run -PappArgs="['./src/test/resources/model_city_sales_data.csv','Golf','London']"
+/*
 run {
     if ( project.hasProperty("appArgs") ) {
         args Eval.me(appArgs)
     }
+}
+*/
+
+run{
+    standardInput = System.in // For User Input
 }
 
 repositories {
