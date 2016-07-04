@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
  * Filters car model info. from sales data.
  */
 
+@Deprecated
 class CarModelFilter {
     private String[] uniqueCarModels; // Cached set of unique car models
 

@@ -11,6 +11,7 @@ import java.io.File;
  * Command line client to generate a report on car sales across a set of cities.
  */
 
+@Deprecated
 public class CommandLineReporter {
     public static final String NONE = "None";
 

@@ -6,6 +6,7 @@ import java.io.File;
  * Command line argument validation
  */
 
+@Deprecated
 class ArgsValidator {
     private static final String USAGE = "Usage: CommandLineReporter <CSV file> <Car Model> <City>";
 
