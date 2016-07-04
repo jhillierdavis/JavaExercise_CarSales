@@ -1,7 +1,7 @@
 package sales.client;
 
 import sales.persistence.CsvParser;
-import sales.services.SalesAnalyser;
+import sales.services.*;
 
 import java.io.File;
 import java.util.Scanner;
@@ -15,9 +15,14 @@ import java.util.Scanner;
 public class InteractiveConsole {
     private static final String NONE = "None";
     private Scanner scanner = new Scanner(System.in);
-    private SalesAnalyser analyser = new SalesAnalyser();
+    private SalesData salesData;
+    private SalesInfo salesInfo;
     
     public InteractiveConsole() {
+        SalesAnalyser analyser = new SalesAnalyser();
+        this.salesData = analyser;
+        this.salesInfo = analyser;
+
         this.run();
     }
 
@@ -54,7 +59,7 @@ public class InteractiveConsole {
                     break;
 
                 case 3:
-                    String mostPopularModel = analyser.mostPopularModel().orElse(NONE);
+                    String mostPopularModel = this.salesInfo.mostPopularModel().orElse(NONE);
                     System.out.println("Most popular car model is " + mostPopularModel);
                     break;
 
@@ -80,7 +85,7 @@ public class InteractiveConsole {
         System.out.println("Loading data from: " + fileToLoad + " .... ");
         try {
             CsvParser parser = new CsvParser(file);
-            this.analyser.reload(parser.toData());
+            this.salesData.reload(parser.toData());
         } catch (Exception e) {
             System.out.println("Failed to load (please recheck whether valid): " + fileToLoad);
         }
@@ -91,21 +96,21 @@ public class InteractiveConsole {
         String model = scanner.next();
         System.out.print("Please enter the city: ");
         String city = scanner.next();
-        analyser.addSale(model, city);
+        this.salesData.addSale(model, city);
         System.out.println("Added data: " + model + " , " + city);
     }
 
     private void userInputTotalSales() {
         System.out.print("Please enter the car model: ");
         String model = scanner.next();
-        int modelSales = analyser.sales(model);
+        int modelSales = this.salesInfo.sales(model);
         System.out.println("Total sales for model " + model + " : " + modelSales);
     }
 
     private void userInputMostPopular() {
         System.out.print("Please enter the city: ");
         String cityForModel = this.scanner.next();
-        String mostPopularModelOf = this.analyser.mostPopularModelOf(cityForModel).orElse(NONE);
+        String mostPopularModelOf = this.salesInfo.mostPopularModelOf(cityForModel).orElse(NONE);
         System.out.println("Most popular car model is " + mostPopularModelOf);
     }
 
